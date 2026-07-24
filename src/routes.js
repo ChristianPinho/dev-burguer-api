@@ -1,0 +1,16 @@
+import { Router } from "express";
+import UserController from "./app/controller/UserController.js";
+import SessionController from "./app/controller/SessionController.js";
+import ProductController from "./app/controller/ProductController.js";
+import multer from "multer";
+import multerConfig from "./config/multer.cjs";
+
+const routes = new Router();
+
+const upload = multer(multerConfig)
+
+routes.post('/users', UserController.store);
+routes.post('/session', SessionController.store);
+routes.post('/products', upload.single('file'),ProductController.store);
+routes.get('/products', ProductController.index);
+export default routes;
